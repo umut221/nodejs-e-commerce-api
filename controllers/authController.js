@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const { User } = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const mailService = require("../services/mailService");
 require("dotenv/config");
 
 exports.register = async (req, res) => {
@@ -17,6 +18,7 @@ exports.register = async (req, res) => {
       country: req.body.country,
     });
     user = user.save();
+    mailService.sendMail(process.env.MY_EMAIL,"Verify E-Mail", "please click the link")
     if (!user) return res.status(404).send("the user cannot be created!");
     res.send({ success: true });
   }

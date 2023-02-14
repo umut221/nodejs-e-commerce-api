@@ -23,7 +23,7 @@ exports.create = async (req, res) => {
     icon: req.body.icon,
     color: req.body.color,
   });
-  category = category.save();
+  category = await category.save();
   if (!category) return res.status(404).send("the category cannot be created!");
   res.send({ success: true });
 };
