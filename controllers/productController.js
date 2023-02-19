@@ -11,7 +11,12 @@ exports.getById = async (req, res) => {
 };
 
 exports.createProduct = async (req, res) => {
-  const result = await productService.create(req.body);
+  const result = await productService.create(
+    req.body,
+    req.protocol,
+    req.get("host"),
+    req.body.image
+  );
   res.send(result);
 };
 
@@ -37,5 +42,10 @@ exports.getFeaturedProducts = async (req, res) => {
 
 exports.getByCategories = async (req, res) => {
   const result = await productService.getByCategories(req.query.categories);
+  res.send(result);
+};
+
+exports.fileUpload = (req, res) => {
+  const result = productService.fileUpload(req,res);
   res.send(result);
 };

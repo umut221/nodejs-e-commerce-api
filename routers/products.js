@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const productController = require("../controllers/productController")
-
+const productController = require("../controllers/productController");
 
 router.get("/getAll", productController.getAll);
 
@@ -18,6 +17,8 @@ router.get("/getCount", productController.getProductCount);
 router.get("/get/featured", productController.getFeaturedProducts);
 
 router.get("/getByCategories", productController.getByCategories);
+
+router.post("/fileUpload",productController.fileUpload);
 
 module.exports = router;
 

@@ -1,6 +1,8 @@
 const { Product } = require("../models/product");
 const { Category } = require("../models/category");
 const mongoose = require("mongoose");
+const singleFileUpload = require("../services/fileService");
+
 
 async function getAll() {
   const products = await Product.find();
@@ -19,16 +21,18 @@ async function getById(id) {
   return { success: true, product: product };
 }
 
-async function create(product) {
+async function create(product, protocol, host, fileName) {
   const categoryControl = await Category.findById(product.category);
   if (!categoryControl)
     return { success: false, message: "Invalid category!!" };
+
+  const basePath = `${protocol}://${host}/public/upload${fileName}`;
 
   const createdProduct = new Product({
     name: product.name,
     description: product.description,
     richDescription: product.richDescription,
-    image: product.image,
+    image: `${basePath}${fileName}`,
     brand: product.brand,
     price: product.price,
     category: product.category,
@@ -109,6 +113,20 @@ async function getByCategories(categories) {
   return { success: true, productList: productList };
 }
 
+function fileUpload(req,res){
+  try {
+    singleFileUpload(req,res, function (error) {
+      if (error) {
+        return {success:false, message:error};
+      } else {
+        return {success: true, message: "Image successfully uploaded."};
+      }
+    });
+  } catch (error) {
+    return {success:false, message: error};
+  }
+}
+
 module.exports = {
   getAll,
   getById,
@@ -118,4 +136,5 @@ module.exports = {
   getCount,
   getFeatured,
   getByCategories,
+  fileUpload
 };
