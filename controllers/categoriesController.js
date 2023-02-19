@@ -1,60 +1,26 @@
-const { Category } = require("../models/category");
+const categoryService = require("../services/categoryService");
 
 exports.getAll = async (req, res) => {
-  const categories = await Category.find();
-  res.send(categories);
+  const result = await categoryService.getAll();
+  res.send(result);
 };
 
 exports.getById = async (req, res) => {
-  const category = await Category.findById(req.params.id).catch((err) => {
-    res.status(400).json({ success: false, error: err });
-  });
-  if (!category)
-    res.status(500).json({
-      success: false,
-      message: "The category with the given ID was not found!",
-    });
-  res.send(category);
+  const result = await categoryService.getById(req.params.id);
+  res.send(result);
 };
 
 exports.create = async (req, res) => {
-  let category = new Category({
-    name: req.body.name,
-    icon: req.body.icon,
-    color: req.body.color,
-  });
-  category = await category.save();
-  if (!category) return res.status(404).send("the category cannot be created!");
-  res.send({ success: true });
+  const result = await categoryService.create(req.body);
+  res.send(result);
 };
 
 exports.update = async (req, res) => {
-  const category = await Category.findByIdAndUpdate(
-    req.params.id,
-    {
-      name: req.body.name,
-      icon: req.body.icon,
-      color: req.body.color,
-    },
-    { new: true }
-  );
-  if (!category) return res.status(404).send("the category cannot be updated!");
-  res.send({ success: true });
+  const result = await categoryService.update(req.params.id, req.body);
+  res.send(result);
 };
 
-exports.delete = (req, res) => {
-  Category.findByIdAndRemove(req.params.id)
-    .then((category) => {
-      if (category)
-        return res
-          .status(200)
-          .json({ success: true, message: "The category is deleted!" });
-      else
-        return res
-          .status(404)
-          .json({ success: false, message: "Category not found!" });
-    })
-    .catch((err) => {
-      return res.status(400).json({ success: false, error: err });
-    });
+exports.delete = async (req, res) => {
+  const result = await categoryService.deleteById(req.params.id);
+  res.send(result);
 };

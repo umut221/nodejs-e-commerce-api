@@ -45,7 +45,7 @@ app.use(`${api}/auth`, authRouter)
 
 mongoose.set('strictQuery', false)
 mongoose.connect(connectionString).then(() => {
-    console.log('Database connection is ready...');
+    console.log('Connected to database.');
 }).catch( (err) => {
     console.log(err);
 });
