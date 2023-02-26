@@ -1,7 +1,7 @@
 const { Product } = require("../models/product");
 const { Category } = require("../models/category");
 const mongoose = require("mongoose");
-const singleFileUpload = require("../services/fileService");
+const singleFileUpload = require("./fileService");
 
 
 async function getAll() {

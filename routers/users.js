@@ -8,8 +8,9 @@ router.get("/getAll", usersController.getAllUsers);
 
 router.get("/getById/:id", usersController.getById);
 
-router.get("/get/count", usersController.getUserCount);
+router.get("/getCount", usersController.getUserCount);
 
 router.delete("/delete/:id", usersController.deleteById);
+
 
 module.exports = router;

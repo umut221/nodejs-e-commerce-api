@@ -14,7 +14,7 @@ router.delete("/delete/:id", productController.deleteProduct);
 
 router.get("/getCount", productController.getProductCount);
 
-router.get("/get/featured", productController.getFeaturedProducts);
+router.get("/getFeatured", productController.getFeaturedProducts);
 
 router.get("/getByCategories", productController.getByCategories);
 

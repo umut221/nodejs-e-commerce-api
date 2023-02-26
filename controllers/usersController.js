@@ -19,3 +19,4 @@ exports.deleteById = async (req, res) => {
   const result = await userService.deleteById(req.params.id);
   res.send(result);
 };
+

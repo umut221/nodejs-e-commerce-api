@@ -7,6 +7,7 @@ const userSchema = mongoose.Schema({
     email: {
         type: String,
         required: true,
+        unique: true
     },
     passwordHash: {
         type: String,
@@ -40,6 +41,15 @@ const userSchema = mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    confirmationCode : {
+        type: String,
+        unique: true
+    },
+    status: {
+        type: String, 
+        enum: ['Pending', 'Active'],
+        default: 'Pending'
+    }
     
 });
 
